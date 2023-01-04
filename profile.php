@@ -2,7 +2,6 @@
 session_start();
 
 if(!isset($_SESSION['username'])) {
-
     header("Location: welcome.php");
 }
 
@@ -19,10 +18,7 @@ if(!isset($_SESSION['username'])) {
     
     <title>HOME</title>
 </head>
-
-
 <body>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
         *{
@@ -73,10 +69,10 @@ if(!isset($_SESSION['username'])) {
                     <?php echo "Weclome.. ".$_SESSION['username']; ?>
                 </li>
                 <li>
-                    <a href="profile.php">Profile</a>
+                    <a href="home.php">Home</a>
                 </li>
                 <li>
-                    <a href="postblog.php">POST</a>
+                    <a href="admin.php">Admin</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>
@@ -84,58 +80,8 @@ if(!isset($_SESSION['username'])) {
             </ul>
         </nav>
     </body>
-
-    <!-- <p>Cookie : <?php //echo $_COOKIE['email']; ?></p> -->
-
-
-   
-    <div class="container">
-    <div class="row">
-        <div class="grid-container">
-    <?php
-                      $connect = mysqli_connect('localhost', 'root', '', 'login_register');
-                     // $hospitalname = $_GET['state'];
-                      $sel= "SELECT * FROM post";
-                      $Q=mysqli_query($connect,$sel);
-                      while($data=mysqli_fetch_assoc($Q)){
-
-                  ?>
     
+
     
-    <div class="grid-item">
-        <div class="card">
-    
-            
-            <!-- <img class="center" width="50%" height="50%" src="uploads/<?//= $data['car_photo']; ?>"> -->
-                <div class="container">
-                <h1><?= $data['title'] ?></h1>
-                <p class="username"><?= $data['username'] ?></p>
-                <p class="sneakpeek"><?= $data['write_post'] ?></p>
-                <p><button><a href="view_single_post.php?v= <?= $data['id']; ?>">View...</a></button></p>
-       
-                </div>
-                    
-                    
-        </div>
-        </div>     
-    
-        <?php } ?>
- 
-    </div>
-    </div>
-</div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>

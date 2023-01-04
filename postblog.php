@@ -1,12 +1,27 @@
 <?php
+include 'config.php';
 session_start();
+error_reporting(0);
 
-if(!isset($_SESSION['username'])) {
+if(isset($_POST['submit'])) {
+    $text = $_POST['write_post'];
+    $title = $_POST['title'];
+    $username = $_SESSION['username'];
+    echo $identity; echo $username;
 
-    header("Location: welcome.php");
+    if(TRUE){
+        $sql = "INSERT INTO post (username, write_post, title) VALUES ('$username', '$text', '$title'); ";
+        
+        $result = mysqli_query($conn, $sql);
+
+    } else {
+        echo "<script>alert('Something went wrong..')</script>";
+    }
 }
 
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -19,8 +34,6 @@ if(!isset($_SESSION['username'])) {
     
     <title>HOME</title>
 </head>
-
-
 <body>
 
     <style>
@@ -73,10 +86,10 @@ if(!isset($_SESSION['username'])) {
                     <?php echo "Weclome.. ".$_SESSION['username']; ?>
                 </li>
                 <li>
-                    <a href="profile.php">Profile</a>
+                    <a href="home.php">Home</a>
                 </li>
                 <li>
-                    <a href="postblog.php">POST</a>
+                    <a href="profile.php">POST</a>
                 </li>
                 <li>
                     <a href="logout.php">Logout</a>
@@ -84,57 +97,23 @@ if(!isset($_SESSION['username'])) {
             </ul>
         </nav>
     </body>
+    
 
-    <!-- <p>Cookie : <?php //echo $_COOKIE['email']; ?></p> -->
-
-
-   
     <div class="container">
-    <div class="row">
-        <div class="grid-container">
-    <?php
-                      $connect = mysqli_connect('localhost', 'root', '', 'login_register');
-                     // $hospitalname = $_GET['state'];
-                      $sel= "SELECT * FROM post";
-                      $Q=mysqli_query($connect,$sel);
-                      while($data=mysqli_fetch_assoc($Q)){
-
-                  ?>
-    
-    
-    <div class="grid-item">
-        <div class="card">
-    
+        <form action="postblog.php" method="POST" class="postbox">
+            <div class="input-group">
+                <input type="text" placeholder="hook your audience" name="title" value="<?php echo $_POST['title']; ?>" required>
+            </div>
+            <div class="input-group">
+                <input type="text" placeholder="write here" name="write_post" 
+                value="<?php echo $_POST['write_post']; ?>" required>
+            </div>
             
-            <!-- <img class="center" width="50%" height="50%" src="uploads/<?//= $data['car_photo']; ?>"> -->
-                <div class="container">
-                <h1><?= $data['title'] ?></h1>
-                <p class="username"><?= $data['username'] ?></p>
-                <p class="sneakpeek"><?= $data['write_post'] ?></p>
-                <p><button><a href="view_single_post.php?v= <?= $data['id']; ?>">View...</a></button></p>
-       
-                </div>
-                    
-                    
-        </div>
-        </div>     
+            <div class="input-group">
+                <button name="submit" class="btn">POST</button>
+            </div>        </form>
+    </div>
     
-        <?php } ?>
- 
-    </div>
-    </div>
-</div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
 
 
 </body>

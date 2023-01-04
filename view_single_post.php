@@ -6,6 +6,7 @@ if(!isset($_SESSION['username'])) {
     header("Location: welcome.php");
 }
 
+
 ?>
 
 
@@ -15,7 +16,9 @@ if(!isset($_SESSION['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/homestyle.css">
+    <link rel="stylesheet" type="text/css" href="css/view_single_post.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
     <title>HOME</title>
 </head>
@@ -23,7 +26,7 @@ if(!isset($_SESSION['username'])) {
 
 <body>
 
-    <style>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
         *{
             margin: 0px;
@@ -62,6 +65,12 @@ if(!isset($_SESSION['username'])) {
             font-weight: bold;
             font-size: 14px;
         }
+
+        button.delete {
+            background-color: red;
+            border-radius: 20px;
+        }
+
     </style>
     <body>
         <nav>
@@ -73,7 +82,7 @@ if(!isset($_SESSION['username'])) {
                     <?php echo "Weclome.. ".$_SESSION['username']; ?>
                 </li>
                 <li>
-                    <a href="profile.php">Profile</a>
+                    <a href="home.php">Home</a>
                 </li>
                 <li>
                     <a href="postblog.php">POST</a>
@@ -85,57 +94,28 @@ if(!isset($_SESSION['username'])) {
         </nav>
     </body>
 
-    <!-- <p>Cookie : <?php //echo $_COOKIE['email']; ?></p> -->
 
 
-   
-    <div class="container">
-    <div class="row">
-        <div class="grid-container">
     <?php
-                      $connect = mysqli_connect('localhost', 'root', '', 'login_register');
-                     // $hospitalname = $_GET['state'];
-                      $sel= "SELECT * FROM post";
-                      $Q=mysqli_query($connect,$sel);
-                      while($data=mysqli_fetch_assoc($Q)){
+        $connect = mysqli_connect('localhost','root','','login_register');
+        $id=$_GET['v'];
+        $blog= "SELECT * FROM post WHERE id='$id'";
+        $re=mysqli_query($connect,$blog);
+        $data=mysqli_fetch_assoc($re);
 
-                  ?>
+    ?>
     
-    
-    <div class="grid-item">
-        <div class="card">
-    
-            
-            <!-- <img class="center" width="50%" height="50%" src="uploads/<?//= $data['car_photo']; ?>"> -->
-                <div class="container">
-                <h1><?= $data['title'] ?></h1>
-                <p class="username"><?= $data['username'] ?></p>
-                <p class="sneakpeek"><?= $data['write_post'] ?></p>
-                <p><button><a href="view_single_post.php?v= <?= $data['id']; ?>">View...</a></button></p>
-       
-                </div>
-                    
-                    
-        </div>
-        </div>     
-    
-        <?php } ?>
- 
+
+    <div class="card">
+        <!-- <img class="center" width="50%" height="30%" src="congrates.gif"  > -->
+        <h1><?= $data['title'] ?></h1>
+        <p class="username"><?= $data['username'] ?></p>
+        <p class="actual_text"><?= $data['write_post'] ?></p>
+        <p><button><a class="delete" href="delete_post.php?e= <?= $data['id']; ?>">Delete</a></button></p>
+        
     </div>
-    </div>
-</div>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
 
 
 </body>
 </html>
+
